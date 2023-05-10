@@ -1,0 +1,41 @@
+import requests
+import json
+
+# Define the API endpoint for sending messages
+endpoint = "https://api.linkedin.com/v2/conversations"
+
+# Define your access token and the LinkedIn user's ID
+access_token = "YOUR_ACCESS_TOKEN"
+user_id = "USER_ID"
+
+# Define the message you want to send
+message_body = {
+  "event": {
+    "type": "MESSAGE",
+    "message": "Hi! I saw your profile on LinkedIn and I'm interested in connecting with you. Would you be open to connecting and discussing potential opportunities?"
+  },
+  "recipients": {
+    "values": [
+      {
+        "person": {
+          "id": user_id
+        }
+      }
+    ]
+  }
+}
+
+# Convert the message to JSON format
+message_json = json.dumps(message_body)
+
+# Set up the request headers
+headers = {
+  "Content-Type": "application/json",
+  "Authorization": f"Bearer {access_token}"
+}
+
+# Send the message using the API
+response = requests.post(endpoint, headers=headers, data=message_json)
+
+# Print the response status code
+print(response.status_code)
